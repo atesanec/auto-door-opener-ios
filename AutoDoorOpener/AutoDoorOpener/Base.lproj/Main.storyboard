@@ -2,6 +2,7 @@
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="21225" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
     <device id="retina6_0" orientation="portrait" appearance="light"/>
     <dependencies>
+        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21207"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
@@ -17,10 +18,10 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="6oG-7K-w3f">
-                                <rect key="frame" x="144" y="377" width="102" height="103"/>
+                                <rect key="frame" x="12" y="277" width="390" height="303"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Gtx-F1-Gwh">
-                                        <rect key="frame" x="0.0" y="0.0" width="102" height="34.333333333333336"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="390" height="34.333333333333336"/>
                                         <state key="normal" title="Button"/>
                                         <buttonConfiguration key="configuration" style="plain" title="Start"/>
                                         <connections>
@@ -28,7 +29,7 @@
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="u16-cN-fto">
-                                        <rect key="frame" x="0.0" y="34.333333333333314" width="102" height="34.333333333333343"/>
+                                        <rect key="frame" x="0.0" y="34.333333333333314" width="390" height="34.333333333333343"/>
                                         <state key="normal" title="Button"/>
                                         <buttonConfiguration key="configuration" style="plain" title="Stop"/>
                                         <connections>
@@ -36,23 +37,40 @@
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Mfc-JK-3nj">
-                                        <rect key="frame" x="0.0" y="68.666666666666686" width="102" height="34.333333333333343"/>
+                                        <rect key="frame" x="0.0" y="68.666666666666686" width="390" height="34.333333333333343"/>
                                         <state key="normal" title="Button"/>
                                         <buttonConfiguration key="configuration" style="plain" title="Test Open"/>
                                         <connections>
                                             <action selector="onTestDoorOpen" destination="BYZ-38-t0r" eventType="touchUpInside" id="83Z-fE-o2v"/>
                                         </connections>
                                     </button>
+                                    <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="K56-zf-bbO">
+                                        <rect key="frame" x="0.0" y="103" width="390" height="200"/>
+                                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="200" id="vi3-ck-jDE"/>
+                                        </constraints>
+                                        <color key="textColor" systemColor="labelColor"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                    </textView>
                                 </subviews>
                             </stackView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
-                            <constraint firstItem="6oG-7K-w3f" firstAttribute="centerX" secondItem="6Tk-OE-BBY" secondAttribute="centerX" id="e8X-RU-eHT"/>
+                            <constraint firstItem="6oG-7K-w3f" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" constant="12" id="FzF-hZ-Hjp"/>
+                            <constraint firstItem="6oG-7K-w3f" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="12" id="S35-n1-0Bi"/>
                             <constraint firstItem="6oG-7K-w3f" firstAttribute="centerY" secondItem="6Tk-OE-BBY" secondAttribute="centerY" id="neE-sn-g2W"/>
+                            <constraint firstItem="6oG-7K-w3f" firstAttribute="centerX" secondItem="6Tk-OE-BBY" secondAttribute="centerX" id="sVk-L1-mEo"/>
                         </constraints>
                     </view>
+                    <connections>
+                        <outlet property="logTextView" destination="K56-zf-bbO" id="iKl-R7-4ok"/>
+                        <outlet property="startButton" destination="Gtx-F1-Gwh" id="OdR-ed-4JG"/>
+                        <outlet property="stopButton" destination="u16-cN-fto" id="2Lc-mv-9EU"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
@@ -60,6 +78,9 @@
         </scene>
     </scenes>
     <resources>
+        <systemColor name="labelColor">
+            <color red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>

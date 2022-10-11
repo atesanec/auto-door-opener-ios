@@ -26,6 +26,9 @@ class AutoDoorOpenManager {
     var detectorDisposeBag = Set<AnyCancellable>()
     var disposeBag = DisposeBag()
     
+    let isRunning = CurrentValueSubject<Bool, Never>(false)
+    let eventMessages = PassthroughSubject<String, Never>()
+    
     let classificationSubject = PassthroughSubject<SNClassificationResult, Error>()
     static let trackedClassifications = [
         "bell",
@@ -42,6 +45,9 @@ class AutoDoorOpenManager {
     func start() {
         detectorDisposeBag.removeAll()
         disposeBag = DisposeBag()
+        UIApplication.shared.isIdleTimerDisabled = true
+        isRunning.send(true)
+        eventMessages.send("Started!")
         
         SystemAudioClassifier.singleton.startSoundClassification(
           subject: classificationSubject,
@@ -57,11 +63,18 @@ class AutoDoorOpenManager {
         .sink(receiveCompletion: { _ in }) { [weak self] _ in
             self?.runDoorOpen()
         }.store(in: &detectorDisposeBag)
+        
+        Just<Void>(()).delay(for: .seconds(60 * 60 * 3), scheduler: RunLoop.main).sink { [weak self] in
+            self?.stop()
+        }.store(in: &detectorDisposeBag)
     }
     
     func stop() {
         detectorDisposeBag.removeAll()
         disposeBag = DisposeBag()
+        UIApplication.shared.isIdleTimerDisabled = false
+        isRunning.send(false)
+        eventMessages.send("Stopped!")
         
         SystemAudioClassifier.singleton.stopSoundClassification()
     }
@@ -80,6 +93,9 @@ class AutoDoorOpenManager {
             .flatMap { $0.discoverCharacteristics([.init(string: Self.openBleCharacteristicId)]) }.asObservable()
             .map { $0.first! }
             .flatMap { $0.writeValue(Data(Self.openBlePayload), type: CBCharacteristicWriteType.withResponse) }.asObservable()
+            .do(onNext: { [weak self] _ in
+                self?.eventMessages.send("Door opened!")
+            })
             .map {_ in }
             .asObservable()
     }
